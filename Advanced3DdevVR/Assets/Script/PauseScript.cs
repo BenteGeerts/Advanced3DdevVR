@@ -8,8 +8,9 @@ public class PauseScript : MonoBehaviour
 {
     public InputActionReference toggleReference = null;
     public TextMeshProUGUI text;
-    public GameObject left;
-    public GameObject right;
+    public GameObject origin;
+    public GameObject camera;
+    public bool paused = true;
 
     void Awake()
     {
@@ -24,10 +25,23 @@ public class PauseScript : MonoBehaviour
 
     void Toggle(InputAction.CallbackContext context)
     {
-        text.enabled = true;
-        Time.timeScale = 0;
-        left.SetActive(false);
-        right.SetActive(false);
-        Debug.Log("Paused");
+        paused = !paused;
+        if(paused == false)
+        {
+            text.enabled = true;
+            Time.timeScale = 0;
+            origin.SetActive(false);
+            camera.SetActive(true);
+            Debug.Log("Paused");
+        }
+        if(paused)
+        {
+            text.enabled = false;
+            Time.timeScale = 1;
+            origin.SetActive(true);
+            camera.SetActive(false);
+            Debug.Log("Unpaused");
+        }
+        
     }
 }
